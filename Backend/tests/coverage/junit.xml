@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="E:\KABA-DELIVERY\Backend\phpunit.xml" tests="12" assertions="50" errors="0" failures="0" skipped="0" time="3.693002">
+    <testsuite name="Unit" tests="1" assertions="1" errors="0" failures="0" skipped="0" time="0.021745">
+      <testsuite name="Tests\Unit\ExampleTest" file="E:\KABA-DELIVERY\Backend\tests\Unit\ExampleTest.php" tests="1" assertions="1" errors="0" failures="0" skipped="0" time="0.021745">
+        <testcase name="test_that_true_is_true" file="E:\KABA-DELIVERY\Backend\tests\Unit\ExampleTest.php" line="12" class="Tests\Unit\ExampleTest" classname="Tests.Unit.ExampleTest" assertions="1" time="0.021745"/>
+      </testsuite>
+    </testsuite>
+    <testsuite name="Feature" tests="11" assertions="49" errors="0" failures="0" skipped="0" time="3.671258">
+      <testsuite name="Tests\Feature\AbonneTest" file="E:\KABA-DELIVERY\Backend\tests\Feature\AbonneTest.php" tests="6" assertions="27" errors="0" failures="0" skipped="0" time="3.146028">
+        <testcase name="create_abonne" file="E:\KABA-DELIVERY\Backend\tests\Feature\AbonneTest.php" line="22" class="Tests\Feature\AbonneTest" classname="Tests.Feature.AbonneTest" assertions="9" time="2.833187"/>
+        <testcase name="index_abonne" file="E:\KABA-DELIVERY\Backend\tests\Feature\AbonneTest.php" line="48" class="Tests\Feature\AbonneTest" classname="Tests.Feature.AbonneTest" assertions="4" time="0.077650"/>
+        <testcase name="show_abonne" file="E:\KABA-DELIVERY\Backend\tests\Feature\AbonneTest.php" line="70" class="Tests\Feature\AbonneTest" classname="Tests.Feature.AbonneTest" assertions="8" time="0.063400"/>
+        <testcase name="update_abonne" file="E:\KABA-DELIVERY\Backend\tests\Feature\AbonneTest.php" line="97" class="Tests\Feature\AbonneTest" classname="Tests.Feature.AbonneTest" assertions="2" time="0.066826"/>
+        <testcase name="delete_abonne" file="E:\KABA-DELIVERY\Backend\tests\Feature\AbonneTest.php" line="121" class="Tests\Feature\AbonneTest" classname="Tests.Feature.AbonneTest" assertions="2" time="0.058698"/>
+        <testcase name="show_abonne_introuvable" file="E:\KABA-DELIVERY\Backend\tests\Feature\AbonneTest.php" line="139" class="Tests\Feature\AbonneTest" classname="Tests.Feature.AbonneTest" assertions="2" time="0.046267"/>
+      </testsuite>
+      <testsuite name="Tests\Feature\ExampleTest" file="E:\KABA-DELIVERY\Backend\tests\Feature\ExampleTest.php" tests="1" assertions="1" errors="0" failures="0" skipped="0" time="0.147813">
+        <testcase name="test_the_application_returns_a_successful_response" file="E:\KABA-DELIVERY\Backend\tests\Feature\ExampleTest.php" line="13" class="Tests\Feature\ExampleTest" classname="Tests.Feature.ExampleTest" assertions="1" time="0.147813"/>
+      </testsuite>
+      <testsuite name="Tests\Feature\FactureTest" file="E:\KABA-DELIVERY\Backend\tests\Feature\FactureTest.php" tests="1" assertions="10" errors="0" failures="0" skipped="0" time="0.150176">
+        <testcase name="generer_facture" file="E:\KABA-DELIVERY\Backend\tests\Feature\FactureTest.php" line="35" class="Tests\Feature\FactureTest" classname="Tests.Feature.FactureTest" assertions="10" time="0.150176"/>
+      </testsuite>
+      <testsuite name="Tests\Feature\OperateurTest" file="E:\KABA-DELIVERY\Backend\tests\Feature\OperateurTest.php" tests="3" assertions="11" errors="0" failures="0" skipped="0" time="0.227240">
+        <testcase name="register_operateur" file="E:\KABA-DELIVERY\Backend\tests\Feature\OperateurTest.php" line="15" class="Tests\Feature\OperateurTest" classname="Tests.Feature.OperateurTest" assertions="5" time="0.068821"/>
+        <testcase name="login_operateur" file="E:\KABA-DELIVERY\Backend\tests\Feature\OperateurTest.php" line="31" class="Tests\Feature\OperateurTest" classname="Tests.Feature.OperateurTest" assertions="4" time="0.089201"/>
+        <testcase name="login_mauvais_identifiants" file="E:\KABA-DELIVERY\Backend\tests\Feature\OperateurTest.php" line="53" class="Tests\Feature\OperateurTest" classname="Tests.Feature.OperateurTest" assertions="2" time="0.069218"/>
+      </testsuite>
+    </testsuite>
+  </testsuite>
+</testsuites>

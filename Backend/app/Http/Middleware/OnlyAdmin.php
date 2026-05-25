@@ -11,15 +11,15 @@ class OnlyAdmin
     /**
      * Handle an incoming request.
      *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     * @param  Closure(Request): (Response)  $next
      */
     public function handle(Request $request, Closure $next)
     {
         $user = $request->user();
 
-        if (!$user || $user->role !== 'administrateur') {
+        if (! $user || $user->role !== 'administrateur') {
             return response()->json([
-                'message' => 'Accès refusé. Cette action nécessite des privilèges administrateur.'
+                'message' => 'Accès refusé. Cette action nécessite des privilèges administrateur.',
             ], 403);
         }
 

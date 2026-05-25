@@ -2,61 +2,62 @@
 
 namespace Tests\Feature;
 
-use Tests\TestCase;
 use App\Models\Operateur;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Test;
+use Tests\TestCase;
 
 class OperateurTest extends TestCase
 {
     use RefreshDatabase;
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function register_operateur()
     {
         $response = $this->postJson('/api/auth/register', [
-            'login'    => 'nouveau@test.com',
+            'login' => 'nouveau@test.com',
             'password' => 'password123',
-            'role'     => 'administrateur',
+            'role' => 'administrateur',
         ]);
 
         $response->assertStatus(201)
-                 ->assertJsonStructure([
-                     'message',
-                     'operateur' => ['login', 'role'],
-                 ]);
+            ->assertJsonStructure([
+                'message',
+                'operateur' => ['login', 'role'],
+            ]);
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function login_operateur()
     {
         Operateur::create([
-            'login'    => 'login@test.com',
+            'login' => 'login@test.com',
             'password' => bcrypt('password123'),
-            'role'     => 'administrateur',
+            'role' => 'administrateur',
         ]);
 
         $response = $this->postJson('/api/auth/login', [
-            'login'    => 'login@test.com',
+            'login' => 'login@test.com',
             'password' => 'password123',
         ]);
 
         $response->assertStatus(200)
-                 ->assertJsonStructure([
-                     'user',
-                     'access_token',
-                     'token_type',
-                 ]);
+            ->assertJsonStructure([
+                'user',
+                'access_token',
+                'token_type',
+            ]);
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function login_mauvais_identifiants()
     {
         $response = $this->postJson('/api/auth/login', [
-            'login'    => 'inexistant@test.com',
+            'login' => 'inexistant@test.com',
             'password' => 'mauvais',
         ]);
 
         $response->assertStatus(401)
-                 ->assertJson(['message' => 'Identifiants invalides']);
+            ->assertJson(['message' => 'Identifiants invalides']);
     }
 }

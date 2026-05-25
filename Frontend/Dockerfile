@@ -1,4 +1,4 @@
-# On reste sur Node 20
+# On utilise la version récente Node 24
 FROM node:24-alpine
 
 WORKDIR /app
@@ -14,5 +14,5 @@ COPY . .
 EXPOSE 5173
 
 # On lance le serveur de développement
-# Le --host 0.0.0.0 est CRUCIAL ici aussi
+# Le --host 0.0.0.0 est CRUCIAL ici aussi pour Docker
 CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0"]

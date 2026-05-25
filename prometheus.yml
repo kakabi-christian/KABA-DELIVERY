@@ -1,0 +1,8 @@
+global:
+  scrape_interval: 15s # Fréquence de collecte des métriques (toutes les 15 secondes)
+
+scrape_configs:
+  # Collecte des métriques de ta machine et des conteneurs via Node Exporter
+  - job_name: 'node-exporter'
+    static_configs:
+      - targets: ['host.docker.internal:9100']

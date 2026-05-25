@@ -20,17 +20,15 @@ class ReclammationController extends Controller
      */
     public function store(Request $request)
     {
-        $validateData = $request->validate([           
+        $validateData = $request->validate([
             'facture_id' => 'required|exists:factures,facture_id',
         ]);
 
         $reclamation = Reclamation::create($validateData);
 
-      
-
         return response()->json([
             'message' => 'reclammation créée avec succès',
-            'data' => $reclamation
+            'data' => $reclamation,
         ], 201);
 
     }
@@ -50,20 +48,17 @@ class ReclammationController extends Controller
     {
         $reclamation = Reclamation::find($id);
 
-
         $validateData = $request->validate([
             'reponse' => 'required|string',
         ]);
 
         $reclamation->update($validateData);
 
-
         return response()->json([
             'message' => 'reclamation mise à jour avec succès',
-            'data' => $validateData
+            'data' => $validateData,
         ], 200);
     }
-
 
     /**
      * Remove the specified resource from storage.

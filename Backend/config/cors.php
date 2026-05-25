@@ -18,7 +18,7 @@ return [
         'Authorization',
         'Content-Type',
         'Content-Disposition',
-        'X-CSRF-TOKEN'
+        'X-CSRF-TOKEN',
     ],
 
     'max_age' => 0,

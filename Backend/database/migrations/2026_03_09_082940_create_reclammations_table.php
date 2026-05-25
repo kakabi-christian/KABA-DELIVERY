@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id('reclammation_id');
             $table->unsignedBigInteger('facture_id');
             $table->foreign('facture_id')->references('facture_id')->on('factures')->onDelete('cascade');
-            $table->enum('status',['En cours','Traité'])->default('En cours');
-            $table->string('reponse',200)->nullable();
+            $table->enum('status', ['En cours', 'Traité'])->default('En cours');
+            $table->string('reponse', 200)->nullable();
 
             $table->timestamps();
         });

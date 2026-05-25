@@ -18,7 +18,7 @@ class FactureRequest extends FormRequest
 
             'consommation' => 'required|integer|min:1',
 
-            'statut' => 'in:Emise,Paye'
+            'statut' => 'in:Emise,Paye',
         ];
     }
 
@@ -33,7 +33,7 @@ class FactureRequest extends FormRequest
             'consommation.integer' => 'La consommation doit être un nombre entier.',
             'consommation.min' => 'La consommation doit être strictement positive.',
 
-            'statut.in' => 'Le statut doit être Emise ou Paye.'
+            'statut.in' => 'Le statut doit être Emise ou Paye.',
 
         ];
     }

@@ -2,9 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Laravel\Sanctum\HasApiTokens;
 
 class Operateur extends Authenticatable
 {
@@ -21,5 +20,4 @@ class Operateur extends Authenticatable
     protected $hidden = [
         'password',
     ];
-
 }

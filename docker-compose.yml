@@ -1,0 +1,75 @@
+services:
+  # 1. Base de données MySQL
+  db:
+    image: mysql:8.0
+    container_name: kaba-delivery-db
+    restart: always
+    environment:
+      MYSQL_DATABASE: kaba_delivery_db
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3308:3306" # Modifié en 3308 pour éviter le conflit de port sur ta machine
+    volumes:
+      - kaba_db_data:/var/lib/mysql
+
+  # 2. Backend Laravel
+  backend:
+    build: 
+      context: ./Backend
+      dockerfile: Dockerfile
+    container_name: kaba-delivery-api
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      - DB_HOST=db
+      - DB_PORT=3306
+      - DB_DATABASE=kaba_delivery_db
+      - DB_USERNAME=root
+      - DB_PASSWORD=root
+    volumes:
+      - ./Backend/cacert.pem:/usr/local/etc/php/cacert.pem:ro
+    command: >
+      sh -c "echo 'curl.cainfo=\"/usr/local/etc/php/cacert.pem\"' >> /usr/local/etc/php/conf.d/docker-php-ext-curl.ini && 
+             echo 'openssl.cafile=\"/usr/local/etc/php/cacert.pem\"' >> /usr/local/etc/php/conf.d/docker-php-ext-openssl.ini && 
+             php artisan serve --host=0.0.0.0 --port=8000"
+
+  # 3. Frontend React (Vite)
+  frontend:
+    build: 
+      context: ./Frontend
+      dockerfile: Dockerfile
+    container_name: kaba-delivery-ui
+    ports:
+      - "4200:5173" 
+    environment:
+      - VITE_API_BASE_URL=http://localhost:8000/api
+    depends_on:
+      - backend
+
+  # 4. Collecteur de Métriques Prometheus
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: kaba-delivery-prometheus
+    restart: always
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    ports:
+      - "9090:9090"
+
+  # 5. Visualisation Grafana
+  grafana:
+    image: grafana/grafana-oss:latest
+    container_name: kaba-delivery-grafana
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    volumes:
+      - grafana_data:/var/lib/grafana
+
+volumes:
+  kaba_db_data:
+  grafana_data: # Ajout du volume requis pour sauvegarder tes dashboards Grafana

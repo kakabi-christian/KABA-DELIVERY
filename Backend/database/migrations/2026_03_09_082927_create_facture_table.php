@@ -17,8 +17,8 @@ return new class extends Migration
             $table->foreign('abonne_id')->references('abonne_id')->on('abonnes')->onDelete('cascade');
             $table->integer('consommation');
             $table->decimal('montant_total', 10, 2);
-            $table->timestamp('dateEmission')->useCurrent();    
-            $table->enum('statut',['Emise','Paye'])->default('Emise');
+            $table->timestamp('dateEmission')->useCurrent();
+            $table->enum('statut', ['Emise', 'Paye'])->default('Emise');
 
             $table->timestamps();
         });

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id('operateur_id');
             $table->string('login')->unique();
             $table->string('password');
-            $table->enum ('role',['operateur','administrateur'])->default('operateur');
+            $table->enum('role', ['operateur', 'administrateur'])->default('operateur');
             $table->timestamps();
         });
     }

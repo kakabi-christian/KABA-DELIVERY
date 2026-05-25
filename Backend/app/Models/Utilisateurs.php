@@ -10,7 +10,9 @@ class Utilisateurs extends Model
     use HasApiTokens; // <-- Pour gérer les tokens API avec Sanctum
 
     protected $table = 'utilisateurs';
+
     protected $primaryKey = 'utilisateur_id';
+
     public $incrementing = true;
 
     protected $fillable = [
@@ -19,7 +21,7 @@ class Utilisateurs extends Model
         'telephone',
         'email',
         'password',
-        'role'
+        'role',
     ];
 
     public $timestamps = true;
@@ -28,6 +30,4 @@ class Utilisateurs extends Model
     protected $hidden = [
         'password',
     ];
-
-
 }

@@ -25,16 +25,16 @@ class OperateurRequest extends FormRequest
         if ($this->isMethod('post') && $this->routeIs('auth.register')) {
             // Validation pour l'inscription
             return [
-                'login'    => 'required|string|unique:operateurs,login',
+                'login' => 'required|string|unique:operateurs,login',
                 'password' => 'required|string|min:6',
-                'role'     => 'nullable|in:operateur,administrateur',
+                'role' => 'nullable|in:operateur,administrateur',
             ];
         }
 
         if ($this->isMethod('post') && $this->routeIs('auth.login')) {
             // Validation pour la connexion
             return [
-                'login'    => 'required|string',
+                'login' => 'required|string',
                 'password' => 'required|string',
             ];
         }
@@ -48,11 +48,11 @@ class OperateurRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'login.required'    => 'Le login est obligatoire',
-            'login.unique'      => 'Ce login est déjà utilisé',
+            'login.required' => 'Le login est obligatoire',
+            'login.unique' => 'Ce login est déjà utilisé',
             'password.required' => 'Le mot de passe est obligatoire',
-            'password.min'      => 'Le mot de passe doit contenir au moins 6 caractères',
-            'role.in'           => 'Le rôle doit être soit admin soit superadmin',
+            'password.min' => 'Le mot de passe doit contenir au moins 6 caractères',
+            'role.in' => 'Le rôle doit être soit admin soit superadmin',
         ];
     }
 }

@@ -12,9 +12,9 @@ trait ApiTokenTrait
         Operateur::where('login', 'test@test.com')->delete();
 
         $operateur = Operateur::create([
-            'login'    => 'test@test.com',
+            'login' => 'test@test.com',
             'password' => bcrypt('password123'),
-            'role'     => 'administrateur',
+            'role' => 'administrateur',
         ]);
 
         Sanctum::actingAs($operateur, [], 'sanctum');

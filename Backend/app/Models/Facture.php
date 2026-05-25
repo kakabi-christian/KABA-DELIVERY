@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Facture extends Model
 {
-
     protected $table = 'factures';
 
     protected $primaryKey = 'facture_id';
@@ -27,5 +26,4 @@ class Facture extends Model
     {
         return $this->belongsTo(Abonne::class, 'abonne_id');
     }
-
 }

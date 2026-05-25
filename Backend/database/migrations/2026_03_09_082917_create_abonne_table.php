@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('abonnes', function (Blueprint $table) {
             $table->id('abonne_id');
-            $table->string('nom',100)->NotNull();
-            $table->string('prenom',50)->NotNull();
-            $table->enum('ville',['Yaounde','Douala','Bafoussam','Garoua']);
+            $table->string('nom', 100)->NotNull();
+            $table->string('prenom', 50)->NotNull();
+            $table->enum('ville', ['Yaounde', 'Douala', 'Bafoussam', 'Garoua']);
             $table->string('quartier');
-            $table->string('numerocompteur',25)->unique()->NotNull();
-            $table->enum('typeabonnement',['Domestique','Professionnel'])->default('Domestique');
+            $table->string('numerocompteur', 25)->unique()->NotNull();
+            $table->enum('typeabonnement', ['Domestique', 'Professionnel'])->default('Domestique');
             $table->timestamps();
         });
     }
