@@ -128,7 +128,7 @@ jobs:
           file: ./Backend/Dockerfile
           push: true
           # Tags corrigés sur une seule ligne pour éviter l'erreur de registre de buildx
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/exchapay-backend:latest,${{ secrets.DOCKERHUB_USERNAME }}/exchapay-backend:${{ github.sha }}
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/camwater-backend:latest,${{ secrets.DOCKERHUB_USERNAME }}/camwater-backend:${{ github.sha }}
 
 # --- PARTIE 4 : DÉPLOIEMENT O2SWITCH (FTP PORT 21) - ACTUELLEMENT DÉSACTIVÉ ---
 #  deploy-o2switch:
