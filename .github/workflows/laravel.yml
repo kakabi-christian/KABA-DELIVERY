@@ -1,4 +1,4 @@
-name: CI-CD ExchaPay (Full Pipeline FTP)
+name: CI-CD Camwater (Full Pipeline)
 
 on:
   push:
@@ -25,6 +25,14 @@ jobs:
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
     steps:
+      - name: "📊 [LOG] Initialisation du Runner"
+        run: |
+          echo "=== ENVIRONNEMENT DE CONTEXTE ==="
+          echo "🕒 Heure de démarrage : $(date)"
+          echo "🆔 Commit SHA : ${{ github.sha }}"
+          echo "🌿 Branche cible : ${{ github.ref_name }}"
+          echo "👤 Déclencheur : ${{ github.actor }}"
+
       - name: "📦 Récupération du code"
         uses: actions/checkout@v4
         with:
@@ -37,18 +45,22 @@ jobs:
           extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, mysql, bcmath
           coverage: xdebug
 
+      - name: "📊 [LOG] Vérification des versions PHP & Outils"
+        run: |
+          php -v
+          composer -V
+
       - name: "📥 Installation Dépendances (Composer)"
         working-directory: ./Backend
         run: |
-          echo "🚀 Démarrage de l'installation Composer..."
-          # Utilisation de l'autoloader optimisé pour éviter les conflits de ServiceProviders (ex: Pail)
+          echo "🚀 Démarrage de l'installation Composer avec Autoloader optimisé..."
           composer install --no-ansi --no-interaction --optimize-autoloader --prefer-dist
-          echo "✅ Dépendances installées."
+          echo "✅ Contenu du dossier vendor généré avec succès."
 
       - name: "✨ Vérification Clean Code (Pint)"
         working-directory: ./Backend
         run: |
-          echo "🧐 Analyse du style de code avec Laravel Pint..."
+          echo "🧐 Analyse de style en cours avec Laravel Pint..."
           ./vendor/bin/pint --test
         continue-on-error: true
 
@@ -61,11 +73,12 @@ jobs:
           DB_DATABASE: laravel_test
           DB_USERNAME: root
         run: |
+          echo "🔧 Configuration du fichier d'environnement de test..."
           cp .env.example .env
           php artisan key:generate
-          echo "🏃 Lancement des tests unitaires et feature..."
+          echo "🏃 Lancement de la suite de tests PHPUnit/Pest..."
           php artisan test
-          echo "✅ Tests terminés."
+          echo "✅ Fin de l'exécution des tests."
 
       - name: "🛡️ Scan SonarCloud"
         uses: sonarsource/sonarqube-scan-action@v3
@@ -89,15 +102,20 @@ jobs:
           cache: 'npm'
           cache-dependency-path: ./Frontend/package-lock.json
 
+      - name: "📊 [LOG] Inspection environnement Node"
+        run: |
+          node -v
+          npm -v
+
       - name: "🏗️ Build Vite"
         working-directory: ./Frontend
         run: |
-          echo "📦 Installation des modules npm..."
+          echo "📥 Installation des modules npm..."
           npm install
           echo "🛠️ Lancement du Build de production..."
           npm run build
-          echo "📂 Structure du dossier dist :"
-          ls -R dist/
+          echo "📂 --- STRUCTURE ET CONTENU DU DOSSIER DIST ---"
+          ls -la dist/
 
       - name: "📤 Archivage du Build"
         uses: actions/upload-artifact@v4
@@ -105,7 +123,7 @@ jobs:
           name: frontend-dist
           path: Frontend/dist/
 
-  # --- PARTIE 3 : DOCKER HUB (Optionnel pour o2switch) ---
+  # --- PARTIE 3 : DOCKER HUB ---
   docker-hub:
     name: "🐳 Build & Push Docker"
     needs: laravel-tests
@@ -114,6 +132,23 @@ jobs:
     steps:
       - name: "📦 Récupération du code"
         uses: actions/checkout@v4
+
+      - name: "🚨 [LOG SANITY CHECK] Vérification de la présence des Secrets"
+        run: |
+          echo "=== CHECKING SECRETS AVAILABILITY ==="
+          if [ -z "${{ secrets.DOCKERHUB_USERNAME }}" ]; then
+            echo "❌ ERREUR CRITIQUE : Le secret DOCKERHUB_USERNAME est VIDE ou inexistant dans GitHub Settings !"
+            exit 1
+          else
+            echo "✅ Le secret DOCKERHUB_USERNAME est bien détecté."
+          fi
+          
+          if [ -z "${{ secrets.DOCKERHUB_TOKEN }}" ]; then
+            echo "❌ ERREUR CRITIQUE : Le secret DOCKERHUB_TOKEN est VIDE ou inexistant dans GitHub Settings !"
+            exit 1
+          else
+            echo "✅ Le secret DOCKERHUB_TOKEN est bien détecté."
+          fi
 
       - name: "🔑 Login Docker Hub"
         uses: docker/login-action@v3
@@ -127,7 +162,6 @@ jobs:
           context: ./Backend
           file: ./Backend/Dockerfile
           push: true
-          # Tags corrigés sur une seule ligne pour éviter l'erreur de registre de buildx
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/camwater-backend:latest,${{ secrets.DOCKERHUB_USERNAME }}/camwater-backend:${{ github.sha }}
 
 # --- PARTIE 4 : DÉPLOIEMENT O2SWITCH (FTP PORT 21) - ACTUELLEMENT DÉSACTIVÉ ---
